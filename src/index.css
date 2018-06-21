@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.game{
+    background-color: grey;
+    height: 200px;
+    width: 50%;
+    margin-left: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.subject{
+    width: 50%;
+    height: 100px;
+    background-color:yellow;
+    align-self: center;
+}
+
+.control_panel{
+    align-self: center;
+}
+
+.stats_panel{
+    height: 30px;
+    font-size: 8px;
+    align-self: center;
+}
