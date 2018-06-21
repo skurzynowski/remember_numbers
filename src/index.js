@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import ButtonGroup from "react-bootstrap/lib/ButtonGroup";
 import Button from "react-bootstrap/lib/Button";
+import Jumbotron from "react-bootstrap/lib/Jumbotron";
 
 
 class Counter extends React.Component {
@@ -30,8 +31,11 @@ class Stats_Panel extends React.Component {
 class Presentation_Panel extends React.Component {
     render() {
         return (
-            <div className="subject"></div>
-        );
+            <div className="subject">
+                5
+            </div>
+        )
+            ;
     }
 }
 
