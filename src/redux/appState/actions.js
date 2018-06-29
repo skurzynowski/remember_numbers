@@ -39,3 +39,15 @@ export const SetIndexToCheck= (value) => ({
     value
 })
 
+export const clickButtonNext= (e) => ({
+    type: 'APPSTATE_CLICK_BUTTON_NEXT',
+    e
+})
+export const clickCheckButton= (e) => ({
+    type: 'APPSTATE_CLICK_BUTTON_CHECK',
+    e
+})
+export const setTimer= (timer) => ({
+    type: 'APPSTATE_SET_TIMER',
+    timer
+})

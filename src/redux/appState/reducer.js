@@ -11,6 +11,7 @@ const defaultState = {
     placeholder: 'Number'
 }
 
+
 export default function appState(state = defaultState, action) {
     const newState = Object.assign({}, state)
     switch (action.type) {
@@ -57,7 +58,56 @@ export default function appState(state = defaultState, action) {
         case   'APPSTATE_SET_INDEX_TO_CHECK':
             newState.indexToCheck = action.value
             return newState;
+        case 'APPSTATE_CLICK_BUTTON_NEXT':
+            //click on next when was checking
+            if (state.checkMode === true) {
+                newState.saved_numbers = []
+                newState.checkMode = false;
+                return;
+            }
+            //TODO qustion for Kevin where to put this function
+            let object = Math.floor((Math.random() * 10));
+            newState.object = object;
+            let savedNumbers = state.saved_numbers;
+            savedNumbers = savedNumbers.concat(newState.object);
+            newState.saved_numbers = savedNumbers;
+            let countNumbers = newState.saved_numbers.length;
+            countNumbers++;
+            newState.rememberd = countNumbers;
 
+            return newState;
+        case 'APPSTATE_CLICK_BUTTON_CHECK':
+            //second click
+            if (state.checkMode === true) {
+                if (state.saved_numbers[state.indexToCheck] === parseInt(state.checkingValue)) {
+                    if (state.indexToCheck < state.saved_numbers.length - 1) {
+                        newState.checkMessage = 'Congratulation ' + (state.indexToCheck + 1) + ' correct';
+                        newState.indexToCheck = state.indexToCheck + 1;
+                        newState.checkingValue = '';
+                    } else {
+                        newState.checkMessage = 'Congratulations all numbers correct!!!';
+                        newState.checkingValue = 'Finished';
+                    }
+                } else {
+                    newState.checkMessage = 'Congratulations all numbers correct!!!';
+                }
+                return;
+            }
+            newState.checkMode = true;
+
+            //when click check save last subject to array
+            var savedNumbers = state.saved_numbers;
+            savedNumbers = savedNumbers.concat(state.object);
+            newState.savedNumbers = savedNumbers;
+            var countNumbers = newState.saved_numbers.length;
+            countNumbers++;
+            newState.rememberd = countNumbers;
+            clearInterval(state.timer);
+            return newState;
+
+        case 'APPSTATE_SET_TIMER':
+            newState.timer = action.timer;
+            return newState;
         default:
             return state
     }

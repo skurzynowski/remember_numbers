@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {
     addCountNumbers,
     setTime,
+    setTimer,
     SetCheckMessage,
     setDefaultSavedNumbers,
     setCheckMode,
@@ -27,7 +28,7 @@ class Game extends React.Component {
         const timer = setInterval(
             () => this.thick(),
             1000);
-        this.setState({timer: timer});
+        this.props.onSetTimer( timer);
     };
 
     thick = () => {
@@ -36,82 +37,16 @@ class Game extends React.Component {
         this.props.onSetTime(time);
     };
 
-    click_next_subject = (e) => {
-        //click on next when was checking
-        if (this.props.checkMode === true) {
-            this.props.setDefaultSavedNumbers();
-            this.props.onSetCheckMode(false);
-            return;
-        }
-
-        var object = this.getRandom(10);
-        this.props.onSetNewObject(object);
-
-        var savedNumbers = this.props.saved_numbers;
-        savedNumbers = savedNumbers.concat(this.props.object);
-        this.props.onAddSaveNumber(savedNumbers);
-        //TODO check if works
-        var countNumbers = this.props.saved_numbers.length;
-        countNumbers++;
-        this.props.onAddCountNumbers(countNumbers);
-    };
-
-    getRandom = (range) => {
-        return Math.floor((Math.random() * range));
-    };
-
-    click_check_subject = (e) => {
-        //second click
-        if (this.props.checkMode === true) {
-            this.compareInputWithRememberd();
-            return;
-        }
-
-        this.props.onSetCheckMode(true);
-
-        //when click check save last subject to array
-        var savedNumbers = this.props.saved_numbers;
-        savedNumbers = savedNumbers.concat(this.props.object);
-        this.props.onAddSaveNumber(savedNumbers);
-        //TODO check if works
-        var countNumbers = this.props.saved_numbers.length;
-        countNumbers++;
-        this.props.onAddCountNumbers(countNumbers);
-        clearInterval(this.state.timer);
-    };
-
-    compareInputWithRememberd = () => {
-        //get first from rememberd
-        if (this.props.saved_numbers[this.props.indexToCheck] === parseInt(this.props.checkingValue)) {
-            if (this.props.indexToCheck < this.props.saved_numbers.length - 1) {
-                this.props.onSetCheckMessage('Congratulation ' + (this.props.indexToCheck + 1) + ' correct');
-                this.props.onSetIndexToCheck(this.props.indexToCheck + 1);
-                this.props.onSetCheckingValue('');
-            } else {
-                this.props.onSetCheckMessage('Congratulations all numbers correct!!!');
-                this.props.onSetCheckingValue('Finished');
-            }
-        } else {
-            this.props.onSetCheckMessage('Congratulations all numbers correct!!!');
-        }
-        //compare with input value
-        //show message
-    };
-
-
     handleInputCheck = (e) => {
         this.props.onSetCheckingValue(e.target.value);
     };
 
     render() {
         return (
-
             <div className="game">
                 <StatsPanel/>
-                <PresentationPanel subject={this.props.object} mode={this.props.checkMode}
-                                   handleInputCheck={this.handleInputCheck} checkMessage={this.props.checkMessage}
-                                   inputValue={this.props.checkingValue} placeholder={this.props.placeholder}/>
-                <ControlPanel click_next={this.click_next_subject} click_check={this.click_check_subject}/>
+                <PresentationPanel/>
+                <ControlPanel/>
             </div>);
     }
 }
@@ -130,6 +65,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onSetTime: time => dispatch(setTime(time)),
+    onSetTimer: timer => dispatch(setTimer(timer)),
     setDefaultSavedNumbers: () => dispatch(setDefaultSavedNumbers()),
     onSetCheckMode: bool => dispatch(setCheckMode(bool)),
     onSetNewObject: object => dispatch(setNewObject(object)),
