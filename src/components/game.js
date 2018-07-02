@@ -4,16 +4,8 @@ import PresentationPanel from "./presentation-panel";
 import ControlPanel from "./control-panel";
 import {connect} from 'react-redux'
 import {
-    addCountNumbers,
     setTime,
     setTimer,
-    SetCheckMessage,
-    setDefaultSavedNumbers,
-    setCheckMode,
-    setNewObject,
-    addSavedNumber,
-    SetCheckValue,
-    SetIndexToCheck
 } from '../redux/appState/actions'
 
 class Game extends React.Component {
