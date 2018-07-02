@@ -51,3 +51,7 @@ export const setTimer= (timer) => ({
     type: 'APPSTATE_SET_TIMER',
     timer
 })
+export const handleInputChange= (e) => ({
+    type: 'APPSTATE_CHANGE_INPUT',
+    e
+})

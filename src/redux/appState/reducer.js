@@ -1,6 +1,6 @@
 const defaultState = {
     rememberd: 0,
-    saved_numbers: [],
+    savedNumbers: [],
     time: 0,
     timer: null,
     checkMode: false,
@@ -8,14 +8,14 @@ const defaultState = {
     indexToCheck: 0,
     object: 0,
     checkMessage: 'Write Your quest and click check button',
-    placeholder: 'Number'
+    placeholder: 'Number',
+    checkingResult: null,
 }
 
 
 export default function appState(state = defaultState, action) {
     const newState = Object.assign({}, state)
     switch (action.type) {
-
         case 'APPSTATE_SET_DEFAULT':
             return defaultState
 
@@ -28,7 +28,7 @@ export default function appState(state = defaultState, action) {
             return newState
 
         case 'SET_DEFAULT_SAVED_NUMBERS':
-            newState.saved_numbers = []
+            newState.savedNumbers = []
             return newState
 
         case 'APPSTATE_SET_CHECK_MODE':
@@ -40,7 +40,7 @@ export default function appState(state = defaultState, action) {
             return newState;
 
         case  'APPSTATE_ADD_SAVED_NUMBER':
-            newState.saved_numbers = action.number
+            newState.savedNumbers = action.number
             return newState;
 
         case  'APPSTATE_ADD_COUNT_NUMBERS':
@@ -61,52 +61,56 @@ export default function appState(state = defaultState, action) {
         case 'APPSTATE_CLICK_BUTTON_NEXT':
             //click on next when was checking
             if (state.checkMode === true) {
-                newState.saved_numbers = []
+                newState.savedNumbers = []
                 newState.checkMode = false;
-                return;
+                return newState;
             }
-            //TODO qustion for Kevin where to put this function
             let object = Math.floor((Math.random() * 10));
             newState.object = object;
-            let savedNumbers = state.saved_numbers;
-            savedNumbers = savedNumbers.concat(newState.object);
-            newState.saved_numbers = savedNumbers;
-            let countNumbers = newState.saved_numbers.length;
-            countNumbers++;
+            let savedNumbers = state.savedNumbers;
+            savedNumbers = savedNumbers.concat(state.object);
+            newState.savedNumbers = savedNumbers;
+            let countNumbers = newState.savedNumbers.length;
             newState.rememberd = countNumbers;
 
             return newState;
+
         case 'APPSTATE_CLICK_BUTTON_CHECK':
             //second click
             if (state.checkMode === true) {
-                if (state.saved_numbers[state.indexToCheck] === parseInt(state.checkingValue)) {
-                    if (state.indexToCheck < state.saved_numbers.length - 1) {
-                        newState.checkMessage = 'Congratulation ' + (state.indexToCheck + 1) + ' correct';
+                if (state.savedNumbers[state.indexToCheck] === parseInt(state.checkingValue)) {
+                    if (state.indexToCheck < state.savedNumbers.length - 1) {
                         newState.indexToCheck = state.indexToCheck + 1;
-                        newState.checkingValue = '';
+                        newState.checkingResult = 'correct';
+                        newState.inputValue = '';
                     } else {
-                        newState.checkMessage = 'Congratulations all numbers correct!!!';
-                        newState.checkingValue = 'Finished';
+                        newState.checkingResult = 'finished';
+                        newState.inputValue = '';
                     }
-                } else {
-                    newState.checkMessage = 'Congratulations all numbers correct!!!';
+                }else{
+                    newState.checkingResult = 'notCorrect';
+                    newState.inputValue = '';
                 }
-                return;
+                return newState;
             }
             newState.checkMode = true;
 
             //when click check save last subject to array
-            var savedNumbers = state.saved_numbers;
+            var savedNumbers = state.savedNumbers;
             savedNumbers = savedNumbers.concat(state.object);
             newState.savedNumbers = savedNumbers;
-            var countNumbers = newState.saved_numbers.length;
-            countNumbers++;
+            var countNumbers = newState.savedNumbers.length;
             newState.rememberd = countNumbers;
             clearInterval(state.timer);
             return newState;
 
         case 'APPSTATE_SET_TIMER':
             newState.timer = action.timer;
+            return newState;
+
+        case 'APPSTATE_CHANGE_INPUT':
+            newState.checkingValue = action.e.target.value;
+            newState.inputValue = action.e.target.value;
             return newState;
         default:
             return state

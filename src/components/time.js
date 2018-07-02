@@ -13,7 +13,6 @@ class Time extends React.Component {
         if (minutes < 10) {
             minutes = '0' + minutes;
         }
-
         return minutes + ':' + seconds;
     };
 
