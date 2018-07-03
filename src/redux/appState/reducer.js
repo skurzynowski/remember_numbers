@@ -39,7 +39,7 @@ export default function appState(state = defaultState, action) {
             newState.object = action.object
             return newState;
 
-        case  'APPSTATE_ADD_SAVED_NUMBER':
+        case  'APPSTATE_SET_SAVED_NUMBER':
             newState.savedNumbers = action.number
             return newState;
 
@@ -75,35 +75,6 @@ export default function appState(state = defaultState, action) {
 
             return newState;
 
-        case 'APPSTATE_CLICK_BUTTON_CHECK':
-            //second click
-            if (state.checkMode === true) {
-                if (state.savedNumbers[state.indexToCheck] === parseInt(state.checkingValue)) {
-                    if (state.indexToCheck < state.savedNumbers.length - 1) {
-                        newState.indexToCheck = state.indexToCheck + 1;
-                        newState.checkingResult = 'correct';
-                        newState.inputValue = '';
-                    } else {
-                        newState.checkingResult = 'finished';
-                        newState.inputValue = '';
-                    }
-                }else{
-                    newState.checkingResult = 'notCorrect';
-                    newState.inputValue = '';
-                }
-                return newState;
-            }
-            newState.checkMode = true;
-
-            //when click check save last subject to array
-            var savedNumbers = state.savedNumbers;
-            savedNumbers = savedNumbers.concat(state.object);
-            newState.savedNumbers = savedNumbers;
-            var countNumbers = newState.savedNumbers.length;
-            newState.rememberd = countNumbers;
-            clearInterval(state.timer);
-            return newState;
-
         case 'APPSTATE_SET_TIMER':
             newState.timer = action.timer;
             return newState;
@@ -111,6 +82,18 @@ export default function appState(state = defaultState, action) {
         case 'APPSTATE_CHANGE_INPUT':
             newState.checkingValue = action.e.target.value;
             newState.inputValue = action.e.target.value;
+            return newState;
+
+        case 'APPSTATE_SET_CHECKING_RESULT':
+            newState.checkingResult = action.result;
+            return newState;
+        //Set rememberd numbers
+        case'APPSTATE_SET_REMEMBERD':
+            newState.rememberd = action.rememberd;
+            return newState;
+        //Set input value
+        case 'APPSTATE_SET_INPUT_VALUE':
+            newState.value = action.value;
             return newState;
         default:
             return state

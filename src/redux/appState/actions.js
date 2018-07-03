@@ -18,40 +18,52 @@ export const setNewObject = (object) => ({
     object
 })
 
-export const addSavedNumber = (number) => ({
-    type: 'APPSTATE_ADD_SAVED_NUMBER',
+export const setSavedNumber = (number) => ({
+    type: 'APPSTATE_SET_SAVED_NUMBER',
     number
 })
 export const addCountNumbers = (number) => ({
     type: 'APPSTATE_ADD_COUNT_NUMBERS',
     number
 })
-export const SetCheckMessage= (message) => ({
+export const setCheckMessage = (message) => ({
     type: 'APPSTATE_SET_CHECK_MESSAGE',
     message
 })
-export const SetCheckValue= (value) => ({
+export const setCheckValue = (value) => ({
     type: 'APPSTATE_SET_CHECK_VALUE',
     value
 })
-export const SetIndexToCheck= (value) => ({
+export const setIndexToCheck = (value) => ({
     type: 'APPSTATE_SET_INDEX_TO_CHECK',
     value
 })
 
-export const clickButtonNext= (e) => ({
+export const clickButtonNext = (e) => ({
     type: 'APPSTATE_CLICK_BUTTON_NEXT',
     e
 })
-export const clickCheckButton= (e) => ({
-    type: 'APPSTATE_CLICK_BUTTON_CHECK',
-    e
-})
-export const setTimer= (timer) => ({
+export const setTimer = (timer) => ({
     type: 'APPSTATE_SET_TIMER',
     timer
 })
-export const handleInputChange= (e) => ({
+export const handleInputChange = (e) => ({
     type: 'APPSTATE_CHANGE_INPUT',
     e
+})
+
+export const setCheckingResult = (result) => ({
+    type: 'APPSTATE_SET_CHECKING_RESULT',
+    result
+})
+
+//Set rememberd numbers
+export const setRememberd = (rememberd) => ({
+    type: 'APPSTATE_SET_REMEMBERD',
+    rememberd
+})
+//Set input value
+export const setInputValue = (value) => ({
+    type: 'APPSTATE_SET_INPUT_VALUE',
+    value
 })
