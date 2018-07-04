@@ -17,16 +17,16 @@ class Game extends React.Component {
     }
 
     componentDidMount = () => {
-        const timer = setInterval(
-            () => this.thick(),
-            1000);
-        this.props.onSetTimer( timer);
+        // const timer = setInterval(
+        //     () => this.thick(),
+        //     1000);
+        // this.props.onSetTimer( timer);
     };
 
     thick = () => {
-        var time = this.props.time;
-        time++;
-        this.props.onSetTime(time);
+        // var time = this.props.time;
+        // time++;
+        // this.props.onSetTime(time);
     };
 
     render() {
