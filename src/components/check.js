@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import {
     setSavedNumber,
+    clickCheck,
     setCheckingResult,
     setIndexToCheck,
     setInputValue,
@@ -17,42 +18,16 @@ class Check extends React.Component {
     }
 
     handleClick = () => {
-        if (this.props.checkMode === true) {
-            if (this.props.savedNumbers[this.props.indexToCheck] === parseInt(this.props.checkingValue)) {
-                if (this.props.indexToCheck < this.props.savedNumbers.length - 1) {
-                    this.props.onSetIndexToCheck(this.props.indexToCheck + 1);
-                    this.props.onSetCheckingResult('correct');
-                    this.props.onSetInputValue('');
-                    return;
-                } else {
-                    this.props.onSetIndexToCheck(0);
-                    this.props.onSetCheckingResult('finished');
-                    this.props.onSetInputValue('');
-                    return;
-                }
-            } else {
-                this.props.onSetCheckingResult('notCorrect');
-                this.props.onSetInputValue('');
-                return;
-            }
-        }
-
-        this.props.onSetCheckMode(true);
-
-        //when click check save last subject to array
-        var savedNumbers = this.props.savedNumbers;
-        savedNumbers = savedNumbers.concat(this.props.object);
-        this.props.onSetSavedNumber(savedNumbers);
-        var countNumbers = this.props.savedNumbers.length;
-        this.props.onSetRememberd(countNumbers);
-        clearInterval(this.props.timer);
+        //Click check
+        this.props.onClickCheck(true);
     }
 }
-
 
 const mapDispatchToProps = dispatch => ({
     onSetSavedNumber: (number) => dispatch(setSavedNumber(number)),
     onSetIndexToCheck: (index) => dispatch(setIndexToCheck(index)),
+    //Click check
+    onClickCheck: (bool) => dispatch(clickCheck(bool)),
     onSetCheckingResult: (result) => dispatch(setCheckingResult(result)),
     //Set input value
     onSetInputValue: (value) => dispatch(setInputValue(value)),
@@ -68,6 +43,7 @@ const mapStateToProps = state => ({
     checkingValue: state.appState.checkingValue,
     object: state.appState.object,
     timer: state.appState.timer,
+    clickCheck: state.appState.clickCheck,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Check)

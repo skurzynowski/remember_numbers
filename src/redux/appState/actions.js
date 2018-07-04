@@ -47,6 +47,11 @@ export const setTimer = (timer) => ({
     type: 'APPSTATE_SET_TIMER',
     timer
 })
+
+//Clean input
+export const CleanInput = () => ({
+    type: 'APPSTATE_CLEAN_INPUT'
+})
 export const handleInputChange = (e) => ({
     type: 'APPSTATE_CHANGE_INPUT',
     e
@@ -66,4 +71,9 @@ export const setRememberd = (rememberd) => ({
 export const setInputValue = (value) => ({
     type: 'APPSTATE_SET_INPUT_VALUE',
     value
+})
+//Click check
+export const clickCheck = (bool) => ({
+    type: 'APPSTATE_CLICK_CHECK',
+    bool
 })

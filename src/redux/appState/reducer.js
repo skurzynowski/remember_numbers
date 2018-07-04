@@ -10,6 +10,8 @@ const defaultState = {
     checkMessage: 'Write Your quest and click check button',
     placeholder: 'Number',
     checkingResult: null,
+    clickCheck: false,
+    inputValue: '',
 }
 
 
@@ -41,6 +43,11 @@ export default function appState(state = defaultState, action) {
 
         case  'APPSTATE_SET_SAVED_NUMBER':
             newState.savedNumbers = action.number
+            return newState;
+
+        //Click check
+        case 'APPSTATE_CLICK_CHECK':
+            newState.clickCheck = action.bool;
             return newState;
 
         case  'APPSTATE_ADD_COUNT_NUMBERS':
@@ -82,6 +89,10 @@ export default function appState(state = defaultState, action) {
         case 'APPSTATE_CHANGE_INPUT':
             newState.checkingValue = action.e.target.value;
             newState.inputValue = action.e.target.value;
+            return newState;
+        //Clean input
+        case 'APPSTATE_CLEAN_INPUT':
+            newState.inputValue = '';
             return newState;
 
         case 'APPSTATE_SET_CHECKING_RESULT':

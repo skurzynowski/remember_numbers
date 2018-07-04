@@ -4,6 +4,11 @@ import {connect} from 'react-redux'
 import {handleInputChange} from '../redux/appState/actions';
 
 class ControlForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
     render() {
         let message;
 
@@ -25,11 +30,11 @@ class ControlForm extends React.Component {
             <form>
                 <p>{message}</p>
                 <FormControl
+                    ref={this.myRef}
                     type="text"
                     placeholder={this.props.placeholder}
                     value={this.props.inputValue}
-                    onChange={this.onChange
-                    }
+                    onChange={this.onChange}
                 />
                 <FormControl.Feedback/>
             </form>
@@ -55,4 +60,4 @@ const mapDispachState = dispach => ({
     onInputChange: e => dispach(handleInputChange(e)),
 });
 
-export default connect(mapStateToProps, mapDispachState)(ControlForm)
+export default connect(mapStateToProps, mapDispachState, null, {withRef: true})(ControlForm)
